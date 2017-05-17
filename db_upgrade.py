@@ -2,6 +2,7 @@ import os
 import re
 import sys
 from subprocess import Popen, PIPE
+import operator
 
 db_user = os.environ.get('DB_USER')
 database = os.environ.get('DATABASE')
@@ -50,6 +51,7 @@ def get_database_version():
     )
 
     output, err = proc.communicate()
+
     db_version = int(output.split('\n')[2])
 
     return db_version
@@ -60,8 +62,10 @@ def scripts_to_execute(db_version, scripts, highest_number):
     """Calculates scripts to execute based on db version and list of all script version values"""
 
     update = None
+    
+    sorted_x = sorted(scripts.items(), key=operator.itemgetter(1))
 
-    for key, value in scripts.iteritems():
+    for key, value in sorted_x:
         if db_version < value:
             print "Executing: {} ...".format(key)
             Popen([
@@ -113,7 +117,5 @@ if __name__ == '__main__':
     db_version = get_database_version()
 
     print "Current database version is: {}\n".format(db_version)
-
-    get_database_version()
 
     scripts_to_execute(db_version, scripts, highest_number)

@@ -1,2 +1,2 @@
 INSERT INTO databaseversion(Revision, Applied)
-VALUES (212, NOW())
+VALUES (0, NOW())

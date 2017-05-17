@@ -1,4 +1,4 @@
 CREATE TABLE databaseversion(
-    Revision int NOT NULL,
-    Applied TIMESTAMP WITH TIME ZONE NOT NULL,
+    Revision BIGINT NOT NULL,
+    Applied TIMESTAMP WITH TIME ZONE NOT NULL
     )
